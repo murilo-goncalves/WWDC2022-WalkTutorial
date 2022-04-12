@@ -7,6 +7,8 @@
 
 import CoreGraphics
 
+typealias FieldFunction = (CGPoint, CGPoint) -> CGFloat
+
 // -TODO: MOVE_TO_GOAL
 enum FieldType {
     case ATTRACTIVE
@@ -21,51 +23,37 @@ class UnivecField {
     private static let K: CGFloat = 100 // spiral constant
     
     private var fieldType: FieldType
-    private var fieldFunction: FieldFunction {
+    
+    public var fieldFunction: FieldFunction {
         switch fieldType {
         case .ATTRACTIVE:
-            return attractive(target:)
+            return attractive(origin:target:)
         case .REPULSIVE:
-            return repulsive(target:)
+            return repulsive(origin:target:)
         case .CW_SPIRAL:
-            return cwSpiral(target:)
+            return cwSpiral(origin:target:)
         case .CCW_SPIRAL:
-            return ccwSpiral(target:)
+            return ccwSpiral(origin:target:)
         }
     }
     
-    private var origin: CGPoint
-    
-    public init(origin: CGPoint, fieldType: FieldType) {
-        self.origin = origin
+    public init(fieldType: FieldType) {
         self.fieldType = fieldType
-    }
-    
-    public func getOrigin() -> CGPoint {
-        return origin
     }
     
     public func setField(type: FieldType) {
         fieldType = type
     }
     
-    public func getVectorAngle(at point: CGPoint) -> CGFloat {
-        return fieldFunction(point)
-    }
-    
-    public func setOrigin(to point: CGPoint) {
-        origin = point
-    }
-    
-    private func attractive(target: CGPoint) -> CGFloat {
+    private func attractive(origin: CGPoint, target: CGPoint) -> CGFloat {
         return atan2(target.y - origin.y, target.x - origin.x)
     }
     
-    private func repulsive(target: CGPoint) -> CGFloat {
+    private func repulsive(origin: CGPoint, target: CGPoint) -> CGFloat {
         return atan2(origin.y - target.y, origin.x - target.x)
     }
     
-    private func spiral(target: CGPoint, is_cw: Bool) -> CGFloat {
+    private func spiral(origin: CGPoint, target: CGPoint, is_cw: Bool) -> CGFloat {
         let sgn = is_cw ? 1.0 : -1.0
         let dist = (target - origin).abs()
         let phi = atan2(target.y - origin.y, target.x - origin.x)
@@ -78,11 +66,11 @@ class UnivecField {
         }
     }
     
-    private func cwSpiral(target: CGPoint) -> CGFloat {
-        return spiral(target: target, is_cw: true)
+    private func cwSpiral(origin: CGPoint, target: CGPoint) -> CGFloat {
+        return spiral(origin: origin, target: target, is_cw: true)
     }
     
-    private func ccwSpiral(target: CGPoint) -> CGFloat {
-        return spiral(target: target, is_cw: false)
+    private func ccwSpiral(origin: CGPoint, target: CGPoint) -> CGFloat {
+        return spiral(origin: origin, target: target, is_cw: false)
     }
 }

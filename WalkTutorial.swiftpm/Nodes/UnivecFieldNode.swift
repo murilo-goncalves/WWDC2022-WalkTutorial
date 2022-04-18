@@ -7,17 +7,15 @@
 
 import SpriteKit
 
-class UnivecFieldNode: SKShapeNode {
+class UnivecFieldNode: SKSpriteNode {
     private let field: UnivecField
     
-    public init(fieldType: FieldType) {
+    public init(imageNamed: String, size: CGSize, fieldType: FieldType) {
         field = UnivecField(fieldType: fieldType)
-        super.init()
-        let diameter = 20
-        self.path = CGPath(ellipseIn: CGRect(origin: CGPoint(x: -diameter / 2, y: -diameter / 2), size: CGSize(width: diameter, height: diameter)), transform: nil)
-        self.fillColor = .blue
+        let texture = SKTexture(imageNamed: imageNamed)
+        super.init(texture: texture, color: UIColor.clear, size: size)
     }
-    
+
     public func getVectorAngle(at point: CGPoint) -> CGFloat {
         return field.fieldFunction(position, point)
     }

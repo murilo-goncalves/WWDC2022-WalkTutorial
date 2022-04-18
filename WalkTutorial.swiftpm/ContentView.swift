@@ -10,24 +10,25 @@ struct ContentView: View {
     }
     
     var body: some View {
-        VStack {
-            SpriteView(scene: scene)
-                .frame(width: 300, height: 600)
-                        .ignoresSafeArea()
-            HStack {
-                Button("Attractive", action: setAttractive)
-                    .buttonStyle(.automatic)
-                Button("Spiral", action: setSpiral)
-                    .buttonStyle(.automatic)
-            }
-        }
+//        VStack {
+//            SpriteView(scene: scene)
+//                .frame(width: 800, height: 1000)
+//                        .ignoresSafeArea()
+//            HStack {
+//                Button("Attractive", action: setAttractive)
+//                    .buttonStyle(.automatic)
+//                Button("Spiral", action: setSpiral)
+//                    .buttonStyle(.automatic)
+//            }
+//        }
+        IntroView()
     }
 
     func setAttractive() {
-        scene.goalField.setField(type: .ATTRACTIVE)
+        scene.arrowField.setGoalField(type: .ATTRACTIVE)
     }
     
     func setSpiral() {
-        scene.goalField.fillColor = .black
+        scene.arrowField.setGoalField(type: .CW_SPIRAL)
     }
 }

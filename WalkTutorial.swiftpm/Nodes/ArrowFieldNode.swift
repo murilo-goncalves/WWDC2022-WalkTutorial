@@ -26,9 +26,9 @@ class ArrowFieldNode: SKNode {
         self.goal = goal
         self.obstacle = obstacle
         super.init()
+        setArrowGrid()
         addChild(goal)
         addChild(obstacle)
-        setArrowGrid()
         updateArrowGrid()
     }
     
@@ -36,14 +36,11 @@ class ArrowFieldNode: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    public func add(obstacle: UnivecField) {
-//        obstacles.append(obstacle)
-//        let sprite = SKShapeNode(circleOfRadius: 10)
-//        sprite.fillColor = .blue
-//        sprite.position = obstacle.getOrigin()
-//        addChild(sprite)
-//        updateArrowGrid()
-//    }
+    
+    public func setGoalField(type: FieldType) {
+        goal.setField(type: type)
+        updateArrowGrid()
+    }
     
     public func getResultingVectorAngle(at point: CGPoint) -> CGFloat {
         let goalAngle = goal.getVectorAngle(at: point)

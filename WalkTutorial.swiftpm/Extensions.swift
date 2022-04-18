@@ -36,6 +36,15 @@ extension CGPoint {
     }
 }
 
+extension CGVector {
+    func speed() -> CGFloat {
+        return sqrt(dx*dx+dy*dy)
+    }
+    func angle() -> CGFloat {
+        return atan2(dy, dx)
+    }
+}
+
 // code snippet from: https://stackoverflow.com/questions/40362204/add-glowing-effect-to-an-skspritenode
 extension SKSpriteNode {
     func glow(radius: CGFloat) {

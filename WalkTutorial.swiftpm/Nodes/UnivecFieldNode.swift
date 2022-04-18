@@ -8,7 +8,7 @@
 import SpriteKit
 
 class UnivecFieldNode: SKShapeNode {
-    let field: UnivecField
+    private let field: UnivecField
     
     public init(fieldType: FieldType) {
         field = UnivecField(fieldType: fieldType)
@@ -20,6 +20,10 @@ class UnivecFieldNode: SKShapeNode {
     
     public func getVectorAngle(at point: CGPoint) -> CGFloat {
         return field.fieldFunction(position, point)
+    }
+    
+    public func setField(type: FieldType) {
+        field.fieldType = type
     }
     
     required init?(coder aDecoder: NSCoder) {

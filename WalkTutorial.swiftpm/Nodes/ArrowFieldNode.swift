@@ -12,8 +12,8 @@ class ArrowFieldNode: SKNode {
     private static let ARROW_SIZE = CGSize(width: 10, height: 10)
     private static let ARROW_PADDING: CGFloat = 20
     private static let HALF_PI: CGFloat = CGFloat.pi / CGFloat(2)
-    private static let MIN_D: CGFloat = 50
-    private static let SIGMA: CGFloat = 10
+    private static let MIN_D: CGFloat = 5
+    private static let SIGMA: CGFloat = 20
     
     private let size: CGSize
     private var arrows: [Arrow] = []

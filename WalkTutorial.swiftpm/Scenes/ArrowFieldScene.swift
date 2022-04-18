@@ -9,7 +9,7 @@ import SpriteKit
 
 class ArrowFieldScene: SKScene {
     var arrowField: ArrowFieldNode!
-    let goalField = UnivecFieldNode(fieldType: .ATTRACTIVE)
+    let goalField = UnivecFieldNode(fieldType: .MOVE_TO_GOAL)
     let obstacleField = UnivecFieldNode(fieldType: .REPULSIVE)
     let player: SKShapeNode = {
         let ball = SKShapeNode(circleOfRadius: 10)
@@ -24,6 +24,7 @@ class ArrowFieldScene: SKScene {
         backgroundColor = .white
         arrowField = ArrowFieldNode(size: frame.size, goal: goalField, obstacle: obstacleField)
         arrowField.updateArrowGrid()
+        obstacleField.position = CGPoint(x: 100, y: 100)
         addChild(arrowField)
         addChild(player)
     }
@@ -41,33 +42,18 @@ class ArrowFieldScene: SKScene {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        let location = touch?.location(in: self)
+        let location = touch?.location(in: arrowField)
         let node = self.atPoint(location!)
-//        if (node == goalField) {
-//            movableNode = goalField
-//        } else {
-//            movableNode = player
-//            player.position = location!
-//        }
+        movableNode = node
         
-        obstacleField.position = location!
+        player.position = location!
         arrowField.updateArrowGrid()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        let location = touch?.location(in: self)
-        
-//        if (movableNode == goalField) {
-//            arrowField.updateArrowGrid()
-//            goalField.setOrigin(to: location!)
-//        }
+        let location = touch?.location(in: arrowField)
 
 //        movableNode?.position = location!
     }
-    
-//    private func setObstacle(at: CGPoint) {
-//        let obstacle = UnivecField(origin: at, fieldType: .REPULSIVE)
-//        arrowField.add(field: obstacle)
-//    }
 }

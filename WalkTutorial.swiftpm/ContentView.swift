@@ -1,12 +1,6 @@
 import SwiftUI
 import SpriteKit
 
-extension UIScreen {
-   static let screenWidth = UIScreen.main.bounds.size.width
-   static let screenHeight = UIScreen.main.bounds.size.height
-   static let screenSize = UIScreen.main.bounds.size
-}
-
 struct ContentView: View {
     var scene: ArrowFieldScene {
         let scene = ArrowFieldScene()
@@ -16,8 +10,24 @@ struct ContentView: View {
     }
     
     var body: some View {
-        SpriteView(scene: scene)
-            .frame(width: UIScreen.screenWidth, height: UIScreen.screenHeight)
-                    .ignoresSafeArea()
+        VStack {
+            SpriteView(scene: scene)
+                .frame(width: 300, height: 600)
+                        .ignoresSafeArea()
+            HStack {
+                Button("Attractive", action: setAttractive)
+                    .buttonStyle(.automatic)
+                Button("Spiral", action: setSpiral)
+                    .buttonStyle(.automatic)
+            }
+        }
+    }
+
+    func setAttractive() {
+        scene.goalField.setField(type: .ATTRACTIVE)
+    }
+    
+    func setSpiral() {
+        scene.goalField.fillColor = .black
     }
 }

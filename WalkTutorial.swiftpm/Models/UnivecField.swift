@@ -6,23 +6,24 @@
 //
 
 import CoreGraphics
+import SwiftUI
 
 typealias FieldFunction = (CGPoint, CGPoint) -> CGFloat
 
-// -TODO: MOVE_TO_GOAL
 enum FieldType {
     case ATTRACTIVE
     case REPULSIVE
     case CW_SPIRAL
     case CCW_SPIRAL
+    case MOVE_TO_GOAL
 }
 
 class UnivecField {
     private static let HALF_PI: CGFloat = CGFloat.pi / CGFloat(2)
-    private static let R: CGFloat = 500 // spiral radius
-    private static let K: CGFloat = 100 // spiral constant
+    private static let R: CGFloat = 15 // spiral radius
+    private static let K: CGFloat = 200 // spiral constant
     
-    private var fieldType: FieldType
+    public var fieldType: FieldType
     
     public var fieldFunction: FieldFunction {
         switch fieldType {
@@ -34,15 +35,13 @@ class UnivecField {
             return cwSpiral(origin:target:)
         case .CCW_SPIRAL:
             return ccwSpiral(origin:target:)
+        case .MOVE_TO_GOAL:
+            return moveGoalToLeft(origin:target:)
         }
     }
     
     public init(fieldType: FieldType) {
         self.fieldType = fieldType
-    }
-    
-    public func setField(type: FieldType) {
-        fieldType = type
     }
     
     private func attractive(origin: CGPoint, target: CGPoint) -> CGFloat {
@@ -72,5 +71,28 @@ class UnivecField {
     
     private func ccwSpiral(origin: CGPoint, target: CGPoint) -> CGFloat {
         return spiral(origin: origin, target: target, is_cw: false)
+    }
+    
+    private func moveGoalToLeft(origin: CGPoint, target: CGPoint) -> CGFloat {
+        let angle: CGFloat
+        let translated = origin - target
+        let yl = translated.y + UnivecField.R
+        let yr = translated.y - UnivecField.R
+        let posl = translated + CGPoint(x: 0, y: UnivecField.R)
+        let posr = translated - CGPoint(x: 0, y: UnivecField.R)
+        
+        if (-UnivecField.R <= translated.y && translated.y < UnivecField.R) {
+            let angleCw = cwSpiral(origin: origin, target: posr)
+            let angleCcw = ccwSpiral(origin: origin, target: posl)
+            let nCw = CGPoint(x: cos(angleCw), y: sin(angleCw))
+            let nCcw = CGPoint(x: cos(angleCcw), y: sin(angleCcw))
+            let tmp: CGPoint = (yl * nCcw - yr * nCw) * (1.0 / (2.0 * UnivecField.R))
+            angle = -atan2(tmp.y, tmp.x)
+        } else if (translated.y < -UnivecField.R) {
+            return ccwSpiral(origin: origin, target: posl)
+        } else {
+            return cwSpiral(origin: origin, target: posr)
+        }
+        return angle
     }
 }

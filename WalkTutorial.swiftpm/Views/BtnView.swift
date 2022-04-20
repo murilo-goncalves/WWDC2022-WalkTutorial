@@ -14,6 +14,6 @@ struct BtnView: View {
         Image(image)
             .resizable()
             .renderingMode(.original)
-            .frame(width: UIScreen.screenWidth * 0.5, height: UIScreen.screenHeight * 0.2, alignment: .top)
+            .frame(width: UIScreen.screenWidth * 0.3, height: UIScreen.screenHeight * 0.15, alignment: .top)
     }
 }

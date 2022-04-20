@@ -1,19 +1,19 @@
 //
-//  FirstPage.swift
-//  
+//  SecondPageView.swift
+//  WalkTutorial
 //
-//  Created by Murilo Gonçalves on 19/04/22.
+//  Created by Murilo Gonçalves on 20/04/22.
 //
 
 import SwiftUI
 import SpriteKit
 
-struct FirstPageView: View {
+struct SecondPageView: View {
     private let sceneWidth = UIScreen.screenWidth
-    private let sceneHeight = UIScreen.screenHeight * 0.4
+    private let sceneHeight = UIScreen.screenHeight * 0.37
     
-    var scene: FirstPageScene {
-        let scene = FirstPageScene()
+    var scene: SecondPageScene {
+        let scene = SecondPageScene()
         scene.size = CGSize(width: sceneWidth, height: sceneHeight)
         scene.scaleMode = .fill
         return scene
@@ -24,13 +24,14 @@ struct FirstPageView: View {
             Color(red: 1, green: 0.937, blue: 0.776, opacity: 1)
                 .ignoresSafeArea()
             VStack {
-                TextView(text: Texts.first)
+                TextView(text: Texts.second)
                 SpriteView(scene: scene)
                     .frame(width: sceneWidth, height: sceneHeight)
                     .ignoresSafeArea()
                 
+                
                 HStack {
-                    NavigationLink(destination: IntroView().navigationBarBackButtonHidden(true)) {
+                    NavigationLink(destination: FirstPageView().navigationBarBackButtonHidden(true)) {
                         BtnView(image: "backBtn")
                     }
                     Spacer()
@@ -38,6 +39,8 @@ struct FirstPageView: View {
                         BtnView(image: "nextBtn")
                     }
                 }
+                
+                Spacer()
             }
         }
         .navigationTitle("")

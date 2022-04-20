@@ -45,7 +45,6 @@ extension CGVector {
     }
 }
 
-// code snippet from: https://stackoverflow.com/questions/40362204/add-glowing-effect-to-an-skspritenode
 extension SKSpriteNode {
     func glow(radius: CGFloat) {
         let effectNode = SKEffectNode()

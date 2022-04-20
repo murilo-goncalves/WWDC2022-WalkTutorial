@@ -35,7 +35,10 @@ struct IntroView: View {
                         .ignoresSafeArea()
                     Spacer()
                     NavigationLink(destination: FirstPageView().navigationBarBackButtonHidden(true)) {
-                        BtnView(image: "startBtn")
+                        Image("startBtn")
+                            .resizable()
+                            .renderingMode(.original)
+                            .frame(width: UIScreen.screenWidth * 0.5, height: UIScreen.screenHeight * 0.2, alignment: .top)
                     }
                     Spacer()
                 }

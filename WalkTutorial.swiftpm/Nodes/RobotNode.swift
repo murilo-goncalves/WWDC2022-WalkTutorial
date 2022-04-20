@@ -8,7 +8,7 @@
 import Foundation
 import SpriteKit
 
-public class RobotNode: SKSpriteNode {
+public class RobotNode: SKSpriteNode, Interactive {
 
     public init(imageNamed: String, size: CGSize) {
         let texture = SKTexture(imageNamed: imageNamed)

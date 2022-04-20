@@ -9,26 +9,26 @@ import SpriteKit
 
 class ArrowFieldNode: SKNode {
     
-    private static let ARROW_SIZE = CGSize(width: 10, height: 10)
-    private static let ARROW_PADDING: CGFloat = 20
+    private static let ARROW_SIZE = CGSize(width: 15, height: 15)
+    private static let ARROW_PADDING: CGFloat = 30
     private static let HALF_PI: CGFloat = CGFloat.pi / CGFloat(2)
-    private static let MIN_D: CGFloat = 5
-    private static let SIGMA: CGFloat = 20
+    private static let MIN_D: CGFloat = 30
+    private static let SIGMA: CGFloat = 30
     
     private let size: CGSize
     private var arrows: [Arrow] = []
     
     private var goal: UnivecFieldNode
-    private var obstacle: UnivecFieldNode
+    private var obstacles: [UnivecFieldNode]
     
-    public init(size: CGSize, goal: UnivecFieldNode, obstacle: UnivecFieldNode) {
+    public init(size: CGSize, goal: UnivecFieldNode, obstacles: [UnivecFieldNode]) {
         self.size = size
         self.goal = goal
-        self.obstacle = obstacle
+        self.obstacles = obstacles
         super.init()
         setArrowGrid()
         addChild(goal)
-        addChild(obstacle)
+        setObstacles()
         updateArrowGrid()
     }
     
@@ -36,25 +36,50 @@ class ArrowFieldNode: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func removeArrows() {
+        for arrow in arrows {
+            arrow.alpha = 0
+        }
+    }
     
     public func setGoalField(type: FieldType) {
         goal.setField(type: type)
         updateArrowGrid()
     }
     
+    public func setObstacles(_ obstacles: [UnivecFieldNode]) {
+        self.obstacles = obstacles
+        setObstacles()
+    }
+    
+    public func add(obstacle: UnivecFieldNode) {
+        obstacles.append(obstacle)
+        addChild(obstacle)
+    }
+    
     public func getResultingVectorAngle(at point: CGPoint) -> CGFloat {
         let goalAngle = goal.getVectorAngle(at: point)
-        let repulsiveAngle = obstacle.getVectorAngle(at: point)
-//        for obstacle in obstacles {
-//            repulsiveAngle += (obstacle.getVectorAngle(at: point) / CGFloat(obstacles.count))
-//        }
         
-        let obstacleDist = (obstacle.position - point).abs()
+        if obstacles.isEmpty {
+            return goalAngle
+        }
         
-        if (obstacleDist < ArrowFieldNode.MIN_D) {
+        var closestObstacleDist = CGFloat.infinity
+        var closestObstacle: UnivecFieldNode!
+        for obstacle in obstacles {
+            let dist = (obstacle.position - point).abs()
+            if dist < closestObstacleDist {
+                closestObstacleDist = dist
+                closestObstacle = obstacle
+            }
+        }
+        
+        let repulsiveAngle = closestObstacle.getVectorAngle(at: point)
+        
+        if (closestObstacleDist < ArrowFieldNode.MIN_D) {
             return repulsiveAngle
         } else {
-            let gauss = gaussian(r: obstacleDist - ArrowFieldNode.MIN_D, s: ArrowFieldNode.SIGMA)
+            let gauss = gaussian(r: closestObstacleDist - ArrowFieldNode.MIN_D, s: ArrowFieldNode.SIGMA)
             return repulsiveAngle * gauss + goalAngle * (1 - gauss)
         }
     }
@@ -63,6 +88,12 @@ class ArrowFieldNode: SKNode {
         for arrow in arrows {
             let angle = getResultingVectorAngle(at: arrow.position)
             arrow.setAngle(angle)
+        }
+    }
+    
+    private func setObstacles() {
+        for obstacle in obstacles {
+            addChild(obstacle)
         }
     }
     

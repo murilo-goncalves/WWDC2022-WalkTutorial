@@ -53,12 +53,26 @@ extension SKSpriteNode {
         addChild(effectNode)
         effectNode.addChild(SKSpriteNode(texture: texture, size: size))
         effectNode.filter = CIFilter(name: "CIGaussianBlur", parameters: ["inputRadius": radius])
+        effectNode.zPosition = -1
+    }
+    
+    func scaleUp() {
+        let scaleUpAction = SKAction.scale(to: 1.3, duration: 0.2)
+        run(scaleUpAction)
+    }
+    func scaleDown() {
+        let scaleDownAction = SKAction.scale(to: 1, duration: 0.2)
+        run(scaleDownAction)
     }
     
     func pulse() {
-        let scaleUpAction = SKAction.scale(to: 7, duration: 0.3)
+        let scaleUpAction = SKAction.scale(to: 1.5, duration: 0.3)
         let scaleDownAction = SKAction.scale(to: 1, duration: 0.3)
         
         run(SKAction.sequence([scaleUpAction, scaleDownAction]))
+    }
+    
+    func stopGlow() {
+        _ = self.children.map( { $0.run(SKAction.fadeOut(withDuration: 0.3)) })
     }
 }

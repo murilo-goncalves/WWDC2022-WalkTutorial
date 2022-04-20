@@ -1,18 +1,19 @@
 //
-//  RobotNode.swift
-//  WalkTutorial
+//  FirstPage.swift
+//  
 //
-//  Created by Murilo Gonçalves on 18/04/22.
+//  Created by Murilo Gonçalves on 19/04/22.
 //
 
 import SwiftUI
 import SpriteKit
 
-struct IntroView: View {
+struct FirstPageView: View {
     private let sceneWidth = UIScreen.screenWidth
-    private let sceneHeight = UIScreen.screenHeight / 3
-    var scene: IntroAnimationScene {
-        let scene = IntroAnimationScene()
+    private let sceneHeight = UIScreen.screenHeight * 0.35
+    
+    var scene: FirstPageScene {
+        let scene = FirstPageScene()
         scene.size = CGSize(width: sceneWidth, height: sceneHeight)
         scene.scaleMode = .fill
         return scene
@@ -23,16 +24,17 @@ struct IntroView: View {
             Color(red: 1, green: 0.937, blue: 0.776, opacity: 1)
                 .ignoresSafeArea()
             VStack {
-                Spacer()
-                Text("WALK")
-                Text("TUTORIAL")
-                Spacer()
+                TextView(text: Texts.first)
                 SpriteView(scene: scene)
                     .frame(width: sceneWidth, height: sceneHeight)
                     .ignoresSafeArea()
+                
                 Spacer()
                 
+                BtnView(image: "startBtn")
             }
         }
+        .navigationTitle("")
+        .navigationBarHidden(true)
     }
 }

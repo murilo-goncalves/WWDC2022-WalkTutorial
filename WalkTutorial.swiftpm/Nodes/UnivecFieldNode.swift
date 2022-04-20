@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class UnivecFieldNode: SKSpriteNode {
+class UnivecFieldNode: SKSpriteNode, Interactive {
     private let field: UnivecField
     
     public init(imageNamed: String, size: CGSize, fieldType: FieldType) {

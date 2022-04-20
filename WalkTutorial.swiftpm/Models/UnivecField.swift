@@ -21,7 +21,7 @@ enum FieldType {
 class UnivecField {
     private static let HALF_PI: CGFloat = CGFloat.pi / CGFloat(2)
     private static let R: CGFloat = 15 // spiral radius
-    private static let K: CGFloat = 300 // spiral constant
+    private static let K: CGFloat = 100 // spiral constant
     
     public var fieldType: FieldType
     

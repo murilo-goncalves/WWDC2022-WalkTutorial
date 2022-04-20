@@ -10,23 +10,26 @@ import SpriteKit
 class IntroAnimationScene: SKScene {
     public var arrowField: ArrowFieldNode!
     private let goalField = UnivecFieldNode(imageNamed: "ball", size: CGSize(width: 30, height: 30), fieldType: .ATTRACTIVE)
-    private let obstacleField = UnivecFieldNode(imageNamed: "yellow_green", size: CGSize(width: 50, height: 50), fieldType: .REPULSIVE)
+    
     private let player = RobotNode(imageNamed: "blue_pink", size: CGSize(width: 50, height: 50))
     
     override func didMove(to view: SKView) {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         backgroundColor = UIColor(red: 1, green: 0.937, blue: 0.776, alpha: 1)
+        
+        arrowField = ArrowFieldNode(size: frame.size, goal: goalField, obstacles: createObstacles())
 
-        obstacleField.position = CGPoint(x: 200, y: 200)
-        goalField.position = CGPoint(x: 200, y: 0)
-        player.position = CGPoint(x: -200, y: 0)
+        goalField.position = CGPoint(x: -300, y: 0)
+        player.position = CGPoint(x: 300, y: 0)
         
-        arrowField = ArrowFieldNode(size: frame.size, goal: goalField, obstacle: obstacleField)
-        
-        arrowField.updateArrowGrid()
+        arrowField.removeArrows()
         
         addChild(arrowField)
         addChild(player)
+        
+        player.glow(radius: 20)
+        
+        arrowField.updateArrowGrid()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -36,8 +39,23 @@ class IntroAnimationScene: SKScene {
         player.position = player.position + step
         player.zRotation = angle + CGFloat.pi / 2
         let dist = (goalField.position - player.position).abs()
-        if (dist < 10) {
-            player.position = frame.origin
+        if (dist < 30) {
+            player.position = CGPoint(x: 300, y: 0)
         }
+    }
+    
+    private func createObstacles() -> [UnivecFieldNode] {
+        let obstacle1 = UnivecFieldNode(imageNamed: "yellow_green", size: CGSize(width: 50, height: 50), fieldType: .REPULSIVE)
+        obstacle1.position = CGPoint(x: 200, y: 0)
+        
+        let obstacle2 = UnivecFieldNode(imageNamed: "yellow_pink", size: CGSize(width: 50, height: 50), fieldType: .REPULSIVE)
+        obstacle2.position = CGPoint(x: 30, y: -100)
+        obstacle2.zRotation = 40
+        
+        let obstacle3 = UnivecFieldNode(imageNamed: "yellow_purple", size: CGSize(width: 50, height: 50), fieldType: .REPULSIVE)
+        obstacle3.position = CGPoint(x: -160, y: 20)
+        obstacle3.zRotation = 20
+        
+        return [obstacle1, obstacle2, obstacle3]
     }
 }

@@ -52,9 +52,20 @@ class ArrowFieldNode: SKNode {
         setObstacles()
     }
     
-    public func add(obstacle: UnivecFieldNode) {
+    public func addObstacle() {
+        let obstacleNames = ["yellow_green", "yellow_pink", "yellow_purple"]
+        let obstacle = UnivecFieldNode(imageNamed: obstacleNames.randomElement()!, size: CGSize(width: 50, height: 50), fieldType: .REPULSIVE)
+        
+        obstacle.physicsBody = SKPhysicsBody(texture: obstacle.texture!, size: obstacle.size)
+        obstacle.physicsBody?.usesPreciseCollisionDetection = true
+        obstacle.physicsBody?.mass = 100
+        
+        obstacle.position = CGPoint(x: Int.random(in: 0..<Int(size.width/2 - obstacle.size.width)), y: Int.random(in: 0..<Int(size.height/2 - obstacle.size.height)))
         obstacles.append(obstacle)
+        
         addChild(obstacle)
+        
+        updateArrowGrid()
     }
     
     public func getResultingVectorAngle(at point: CGPoint) -> CGFloat {

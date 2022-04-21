@@ -10,7 +10,7 @@ import SpriteKit
 
 struct FinalPageView: View {
     private static let sceneWidth = UIScreen.screenWidth
-    private static let sceneHeight = UIScreen.screenHeight * 0.5
+    private static let sceneHeight = UIScreen.screenHeight * 0.6
     
     @State private var right = true
     
@@ -26,18 +26,7 @@ struct FinalPageView: View {
             Color(red: 1, green: 0.937, blue: 0.776, opacity: 1)
                 .ignoresSafeArea()
             VStack {
-                
-                Group {
-                    Text(Texts.sixth) +
-                    Text(" right ").foregroundColor(Color(UIColor(red: 0.762, green: 0.309, blue: 0.975, alpha: 1))) + Text("and") +
-                    Text(" left ").foregroundColor(Color(UIColor(red: 0.309, green: 0.455, blue: 0.975, alpha: 1))) +
-                    Text("'pusher' fields.")
-                }
-                .font(.custom("ChalkboardSE-Light", size: 48))
-                .padding()
-                .padding()
-                .foregroundColor(Color(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)))
-                .minimumScaleFactor(0.2)
+                TextView(text: Texts.final)
                 
                 SpriteView(scene: scene)
                     .frame(width: FinalPageView.sceneWidth, height: FinalPageView.sceneHeight)
@@ -53,6 +42,17 @@ struct FinalPageView: View {
                         right = !right
                     }, label: {
                         Image(right ? "left" : "right")
+                            .resizable()
+                            .renderingMode(.original)
+                            .frame(width: UIScreen.screenWidth * 0.3, height: UIScreen.screenHeight * 0.15, alignment: .top)
+                    })
+                        .buttonStyle(PlainButtonStyle())
+                    
+                    Spacer()
+                    Button(action: {
+                        scene.arrowField.addObstacle()
+                    }, label: {
+                        Image("addObstacle")
                             .resizable()
                             .renderingMode(.original)
                             .frame(width: UIScreen.screenWidth * 0.3, height: UIScreen.screenHeight * 0.15, alignment: .top)

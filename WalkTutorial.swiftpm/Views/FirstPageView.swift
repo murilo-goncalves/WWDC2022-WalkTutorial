@@ -34,7 +34,7 @@ struct FirstPageView: View {
                         BtnView(image: "backBtn")
                     }
                     Spacer()
-                    NavigationLink(destination: IntroView().navigationBarBackButtonHidden(true)) {
+                    NavigationLink(destination: SecondPageView()) {
                         BtnView(image: "nextBtn")
                     }
                 }

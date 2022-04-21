@@ -12,9 +12,10 @@ struct TextView: View {
     
     var body: some View {
         Text(text)
-            .font(.custom("ChalkboardSE-Light", size: 36))
+            .font(.custom("ChalkboardSE-Light", size: 48))
             .padding()
             .padding()
             .foregroundColor(Color(UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)))
+            .minimumScaleFactor(0.2)
     }
 }

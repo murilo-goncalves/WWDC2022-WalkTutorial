@@ -1,5 +1,5 @@
 //
-//  SecondPageView.swift
+//  ThirdPageView.swift
 //  WalkTutorial
 //
 //  Created by Murilo Gonçalves on 20/04/22.
@@ -8,12 +8,12 @@
 import SwiftUI
 import SpriteKit
 
-struct SecondPageView: View {
+struct ThirdPageView: View {
     private let sceneWidth = UIScreen.screenWidth
-    private let sceneHeight = UIScreen.screenHeight * 0.4
+    private let sceneHeight = UIScreen.screenHeight * 0.45
     
-    var scene: SecondPageScene {
-        let scene = SecondPageScene()
+    var scene: ThirdPageScene {
+        let scene = ThirdPageScene()
         scene.size = CGSize(width: sceneWidth, height: sceneHeight)
         scene.scaleMode = .fill
         return scene
@@ -24,18 +24,18 @@ struct SecondPageView: View {
             Color(red: 1, green: 0.937, blue: 0.776, opacity: 1)
                 .ignoresSafeArea()
             VStack {
-                TextView(text: Texts.second)
+                TextView(text: Texts.third)
                 SpriteView(scene: scene)
                     .frame(width: sceneWidth, height: sceneHeight)
                     .ignoresSafeArea()
                 
                 
                 HStack {
-                    NavigationLink(destination: FirstPageView().navigationBarBackButtonHidden(true)) {
+                    NavigationLink(destination: SecondPageView().navigationBarBackButtonHidden(true)) {
                         BtnView(image: "backBtn")
                     }
                     Spacer()
-                    NavigationLink(destination: ThirdPageView()) {
+                    NavigationLink(destination: FourthPageView()) {
                         BtnView(image: "nextBtn")
                     }
                 }
@@ -48,3 +48,4 @@ struct SecondPageView: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
 }
+

@@ -76,11 +76,11 @@ class ArrowFieldNode: SKNode {
         
         let repulsiveAngle = closestObstacle.getVectorAngle(at: point)
         
-        if (closestObstacleDist < ArrowFieldNode.MIN_D) {
+        if (closestObstacleDist <= ArrowFieldNode.MIN_D) {
             return repulsiveAngle
         } else {
             let gauss = gaussian(r: closestObstacleDist - ArrowFieldNode.MIN_D, s: ArrowFieldNode.SIGMA)
-            return repulsiveAngle * gauss + goalAngle * (1 - gauss)
+            return (repulsiveAngle * gauss) + (goalAngle * (1 - gauss))
         }
     }
     

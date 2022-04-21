@@ -20,8 +20,8 @@ enum FieldType {
 
 class UnivecField {
     private static let HALF_PI: CGFloat = CGFloat.pi / CGFloat(2)
-    private static let R: CGFloat = 15 // spiral radius
-    private static let K: CGFloat = 100 // spiral constant
+    private static let R: CGFloat = 30 // spiral radius
+    private static let K: CGFloat = 300 // spiral constant
     
     public var fieldType: FieldType
     
@@ -53,15 +53,15 @@ class UnivecField {
     }
     
     private func spiral(origin: CGPoint, target: CGPoint, is_cw: Bool) -> CGFloat {
-        let sgn = is_cw ? 1.0 : -1.0
+        let sgn = is_cw ? -1.0 : 1.0
         let dist = (target - origin).abs()
         let phi = atan2(target.y - origin.y, target.x - origin.x)
         if (dist > UnivecField.R) {
             let angle = phi + (sgn) * UnivecField.HALF_PI * (2.0 - ((UnivecField.R + UnivecField.K) / (dist + UnivecField.K)))
-            return angle
+            return angle + CGFloat.pi
         } else {
             let angle = phi + (sgn) * UnivecField.HALF_PI * sqrt(dist / UnivecField.R)
-            return angle
+            return angle + CGFloat.pi
         }
     }
     
@@ -78,20 +78,18 @@ class UnivecField {
         let translated = origin - target
         let yl = translated.y + UnivecField.R
         let yr = translated.y - UnivecField.R
-        let posl = translated + CGPoint(x: 0, y: UnivecField.R)
-        let posr = translated - CGPoint(x: 0, y: UnivecField.R)
         
         if (-UnivecField.R <= translated.y && translated.y < UnivecField.R) {
-            let angleCw = cwSpiral(origin: origin, target: posr)
-            let angleCcw = ccwSpiral(origin: origin, target: posl)
+            let angleCw = cwSpiral(origin: origin, target: target)
+            let angleCcw = ccwSpiral(origin: origin, target: target)
             let nCw = CGPoint(x: cos(angleCw), y: sin(angleCw))
             let nCcw = CGPoint(x: cos(angleCcw), y: sin(angleCcw))
             let tmp: CGPoint = (yl * nCcw - yr * nCw) * (1.0 / (2.0 * UnivecField.R))
             angle = -atan2(tmp.y, tmp.x)
         } else if (translated.y < -UnivecField.R) {
-            return ccwSpiral(origin: origin, target: posl)
+            return ccwSpiral(origin: origin, target: target)
         } else {
-            return cwSpiral(origin: origin, target: posr)
+            return cwSpiral(origin: origin, target: target)
         }
         return angle
     }

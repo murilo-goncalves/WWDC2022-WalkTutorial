@@ -18,5 +18,5 @@ struct Texts {
     
     static let fifth = "Now, we will take a look at the attractive Hyperbolic Spiral Field. It may sound intimidating, but it’s really friendly! Being a spiral, we can choose between"
     
-    static let sixth = "With those two fields we met, it's already possible to make something very interesting: combine both to make our pink and blue friend follow an attractive goal while also avoiding repulsive obstacles! Here you can experiment with"
+    static let sixth = "You may be wondering: why we would want a spiral field? Simple! Using a combination of two of them, we can make our brave robot get to the goal at the chosen side! That may be used to push objects to a place, for example, an orange ball! Here you can experiment with"
 }

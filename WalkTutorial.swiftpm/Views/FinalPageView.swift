@@ -1,6 +1,6 @@
 //
-//  SixthPageView.swift
-//  
+//  FinalPageView.swift
+//  WalkTutorial
 //
 //  Created by Murilo Gonçalves on 20/04/22.
 //
@@ -8,14 +8,14 @@
 import SwiftUI
 import SpriteKit
 
-struct SixthPageView: View {
+struct FinalPageView: View {
     private static let sceneWidth = UIScreen.screenWidth
     private static let sceneHeight = UIScreen.screenHeight * 0.5
     
     @State private var right = true
     
-    var scene: SixthPageScene = {
-        let scene = SixthPageScene()
+    var scene: FinalPageScene = {
+        let scene = FinalPageScene()
         scene.size = CGSize(width: sceneWidth, height: sceneHeight)
         scene.scaleMode = .fill
         return scene
@@ -40,7 +40,7 @@ struct SixthPageView: View {
                 .minimumScaleFactor(0.2)
                 
                 SpriteView(scene: scene)
-                    .frame(width: SixthPageView.sceneWidth, height: SixthPageView.sceneHeight)
+                    .frame(width: FinalPageView.sceneWidth, height: FinalPageView.sceneHeight)
                     .ignoresSafeArea()
                 
                 HStack {
@@ -58,12 +58,8 @@ struct SixthPageView: View {
                             .frame(width: UIScreen.screenWidth * 0.3, height: UIScreen.screenHeight * 0.15, alignment: .top)
                     })
                         .buttonStyle(PlainButtonStyle())
-                    Spacer()
-                    NavigationLink(destination: FinalPageView()) {
-                        BtnView(image: "nextBtn")
                     }
-                }
-                
+            
                 Spacer()
             }
         }

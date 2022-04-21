@@ -63,7 +63,6 @@ class FifthPageScene: SKScene {
             movableNode?.glow(radius: 20)
             movableNode?.scaleUp()
             movableNode?.position = location!
-//            arrowField.add(obstacle: UnivecFieldNode(imageNamed: "yellow_green", size: CGSize(width: 50, height: 50), fieldType: .REPULSIVE))
         }
         
         if movableNode == player {

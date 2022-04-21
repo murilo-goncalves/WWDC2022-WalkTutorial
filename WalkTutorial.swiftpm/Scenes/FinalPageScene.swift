@@ -1,18 +1,16 @@
 //
-//  FourthPageScene.swift
-//  
+//  FinalPageScene.swift
+//  WalkTutorial
 //
 //  Created by Murilo Gonçalves on 20/04/22.
 //
 
 import SpriteKit
 
-class FourthPageScene: SKScene {
-    
+class FinalPageScene: SKScene {
     public var arrowField: ArrowFieldNode!
     
-    private let goalField = UnivecFieldNode(imageNamed: "ball", size: CGSize(width: 30, height: 30), fieldType: .ATTRACTIVE)
-    private let obstacleField = UnivecFieldNode(imageNamed: "yellow_green", size: CGSize(width: 50, height: 50), fieldType: .REPULSIVE)
+    private let goalField = UnivecFieldNode(imageNamed: "ball", size: CGSize(width: 30, height: 30), fieldType: .MOVE_TO_GOAL_RIGHT)
     
     private let player = RobotNode(imageNamed: "blue_pink", size: CGSize(width: 50, height: 50))
     private var playerSpeed: CGFloat = -5
@@ -22,16 +20,25 @@ class FourthPageScene: SKScene {
     override func didMove(to view: SKView) {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         backgroundColor = UIColor(red: 1, green: 0.937, blue: 0.776, alpha: 1)
+        physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
         setFieldFrameConstraints(node: goalField)
         setFieldFrameConstraints(node: player)
         
-        arrowField = ArrowFieldNode(size: frame.size, goal: goalField, obstacles: [obstacleField])
+        goalField.position = CGPoint(x: -200, y: 0)
+        goalField.physicsBody = SKPhysicsBody(circleOfRadius: goalField.size.width / 2)
+        goalField.physicsBody?.usesPreciseCollisionDetection = true
+        goalField.physicsBody?.mass = 1
+        
+        arrowField = ArrowFieldNode(size: frame.size, goal: goalField, obstacles: [])
         
         addChild(arrowField)
         
         player.position = frame.origin
-        obstacleField.position = CGPoint(x: -100, y: -100)
+        player.physicsBody = SKPhysicsBody(texture: player.texture!, size: player.size)
+        player.physicsBody?.usesPreciseCollisionDetection = true
+        player.physicsBody?.mass = 100
+        
         movableNode = player
         arrowField.addChild(player)
         
@@ -45,10 +52,13 @@ class FourthPageScene: SKScene {
         player.position = player.position + step
         player.zRotation = angle + CGFloat.pi / 2
         
-        let dist = (goalField.position - player.position).abs()
-        if (dist < 30 && playerSpeed != 0) {
-            player.position = frame.origin
+        if (goalField.position.x <= frame.minX + goalField.size.width && goalField.getFieldType() == .MOVE_TO_GOAL_LEFT) {
+            goalField.position = CGPoint(x: -200, y: 0)
+        } else if (goalField.position.x >= frame.maxX - goalField.size.width && goalField.getFieldType() == .MOVE_TO_GOAL_RIGHT) {
+            goalField.position = CGPoint(x: 200, y: 0)
         }
+        
+        arrowField.updateArrowGrid()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -95,4 +105,5 @@ class FourthPageScene: SKScene {
         node.constraints = [fieldConstraint]
     }
 }
+
 

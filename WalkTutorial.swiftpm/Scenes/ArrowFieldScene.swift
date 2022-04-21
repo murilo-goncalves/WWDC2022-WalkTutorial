@@ -11,7 +11,7 @@ class ArrowFieldScene: SKScene {
     
     public var arrowField: ArrowFieldNode!
     
-    private let goalField = UnivecFieldNode(imageNamed: "ball", size: CGSize(width: 30, height: 30), fieldType: .MOVE_TO_GOAL)
+    private let goalField = UnivecFieldNode(imageNamed: "ball", size: CGSize(width: 30, height: 30), fieldType: .REPULSIVE)
     
     private let obstacleField = UnivecFieldNode(imageNamed: "yellow_green", size: CGSize(width: 50, height: 50), fieldType: .REPULSIVE)
     

@@ -24,6 +24,10 @@ class UnivecFieldNode: SKSpriteNode, Interactive {
         field.fieldType = type
     }
     
+    public func getFieldType() -> FieldType {
+        return field.fieldType
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

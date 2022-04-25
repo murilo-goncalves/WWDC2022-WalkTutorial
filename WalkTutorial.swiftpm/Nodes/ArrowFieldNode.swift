@@ -12,8 +12,8 @@ class ArrowFieldNode: SKNode {
     private static let ARROW_SIZE = CGSize(width: 15, height: 15)
     private static let ARROW_PADDING: CGFloat = 30
     private static let HALF_PI: CGFloat = CGFloat.pi / CGFloat(2)
-    private static let MIN_D: CGFloat = 30
-    private static let SIGMA: CGFloat = 30
+    private static let MIN_D: CGFloat = 35
+    private static let SIGMA: CGFloat = 25
     
     private let size: CGSize
     private var arrows: [Arrow] = []
@@ -91,7 +91,7 @@ class ArrowFieldNode: SKNode {
             return repulsiveAngle
         } else {
             let gauss = gaussian(r: closestObstacleDist - ArrowFieldNode.MIN_D, s: ArrowFieldNode.SIGMA)
-            return (repulsiveAngle * gauss) + (goalAngle * (1 - gauss))
+            return (repulsiveAngle * gauss) + (goalAngle * (1.0 - gauss))
         }
     }
     
@@ -126,7 +126,7 @@ class ArrowFieldNode: SKNode {
     
     private func gaussian(r: CGFloat, s: CGFloat) -> CGFloat {
         let e: CGFloat = 2.7182
-        let exp = (-0.5 * r * r) / (s * s)
-        return pow(e, exp);
+        let exp = -(0.5 * r * r) / (s * s)
+        return pow(e, exp)
     }
 }

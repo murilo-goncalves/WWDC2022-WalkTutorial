@@ -34,7 +34,6 @@ class FirstPageScene: SKScene {
         let location = touch?.location(in: arrowField)
         
         goalField.position = location!
-        goalField.glow(radius: 20)
         goalField.scaleUp()
     }
     
@@ -47,7 +46,6 @@ class FirstPageScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        goalField.stopGlow()
         goalField.scaleDown()
         arrowField.updateArrowGrid()
     }

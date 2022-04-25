@@ -25,7 +25,7 @@ class FinalPageScene: SKScene {
         setFieldFrameConstraints(node: goalField)
         setFieldFrameConstraints(node: player)
         
-        goalField.position = CGPoint(x: -200, y: 0)
+        goalField.position = CGPoint(x: -200, y: -10)
         goalField.physicsBody = SKPhysicsBody(circleOfRadius: goalField.size.width / 2)
         goalField.physicsBody?.usesPreciseCollisionDetection = true
         goalField.physicsBody?.mass = 1
@@ -53,9 +53,9 @@ class FinalPageScene: SKScene {
         player.zRotation = angle + CGFloat.pi / 2
         
         if (goalField.position.x <= frame.minX + goalField.size.width && goalField.getFieldType() == .MOVE_TO_GOAL_LEFT) {
-            goalField.position = CGPoint(x: -200, y: 0)
+            goalField.position = CGPoint(x: -200, y: -10)
         } else if (goalField.position.x >= frame.maxX - goalField.size.width && goalField.getFieldType() == .MOVE_TO_GOAL_RIGHT) {
-            goalField.position = CGPoint(x: 200, y: 0)
+            goalField.position = CGPoint(x: 200, y: 10)
         }
         
         arrowField.updateArrowGrid()
@@ -68,18 +68,16 @@ class FinalPageScene: SKScene {
         
         if node is Interactive {
             let spriteNode = (node as! SKSpriteNode)
-            spriteNode.glow(radius: 20)
-            spriteNode.scaleUp()
             movableNode = spriteNode
         } else {
-            movableNode?.glow(radius: 20)
-            movableNode?.scaleUp()
             movableNode?.position = location!
         }
         
         if movableNode == player {
             playerSpeed = 0
         }
+        
+        movableNode?.scaleUp()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -91,7 +89,6 @@ class FinalPageScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        movableNode?.stopGlow()
         movableNode?.scaleDown()
         movableNode = player
         arrowField.updateArrowGrid()

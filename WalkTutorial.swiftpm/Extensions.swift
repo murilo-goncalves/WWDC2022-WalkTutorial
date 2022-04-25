@@ -36,15 +36,6 @@ extension CGPoint {
     }
 }
 
-extension CGVector {
-    func speed() -> CGFloat {
-        return sqrt(dx*dx+dy*dy)
-    }
-    func angle() -> CGFloat {
-        return atan2(dy, dx)
-    }
-}
-
 extension SKSpriteNode {
     func glow(radius: CGFloat) {
         let effectNode = SKEffectNode()
@@ -62,13 +53,6 @@ extension SKSpriteNode {
     func scaleDown() {
         let scaleDownAction = SKAction.scale(to: 1, duration: 0.2)
         run(scaleDownAction)
-    }
-    
-    func pulse() {
-        let scaleUpAction = SKAction.scale(to: 1.5, duration: 0.3)
-        let scaleDownAction = SKAction.scale(to: 1, duration: 0.3)
-        
-        run(SKAction.sequence([scaleUpAction, scaleDownAction]))
     }
     
     func stopGlow() {

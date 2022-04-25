@@ -8,9 +8,8 @@
 import SpriteKit
 
 class FourthPageScene: SKScene {
-    
     public var arrowField: ArrowFieldNode!
-    
+
     private let goalField = UnivecFieldNode(imageNamed: "ball", size: CGSize(width: 30, height: 30), fieldType: .ATTRACTIVE)
     private let obstacleField = UnivecFieldNode(imageNamed: "yellow_green", size: CGSize(width: 50, height: 50), fieldType: .REPULSIVE)
     
@@ -20,6 +19,7 @@ class FourthPageScene: SKScene {
     private var movableNode: SKSpriteNode?
     
     override func didMove(to view: SKView) {
+        
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         backgroundColor = UIColor(red: 1, green: 0.937, blue: 0.776, alpha: 1)
         
@@ -30,8 +30,8 @@ class FourthPageScene: SKScene {
         
         addChild(arrowField)
         
-        player.position = frame.origin
-        obstacleField.position = CGPoint(x: -100, y: -100)
+        player.position = CGPoint(x: frame.maxX, y: frame.maxY)
+        obstacleField.position = CGPoint(x: 100, y: 100)
         movableNode = player
         arrowField.addChild(player)
         
@@ -47,29 +47,27 @@ class FourthPageScene: SKScene {
         
         let dist = (goalField.position - player.position).abs()
         if (dist < 30 && playerSpeed != 0) {
-            player.position = frame.origin
+            player.position = CGPoint(x: frame.maxX, y: frame.maxY)
         }
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        let location = touch?.location(in: arrowField)
+        let location = touch?.location(in: self)
         let node = arrowField.atPoint(location!)
         
         if node is Interactive {
             let spriteNode = (node as! SKSpriteNode)
-            spriteNode.glow(radius: 20)
-            spriteNode.scaleUp()
             movableNode = spriteNode
         } else {
-            movableNode?.glow(radius: 20)
-            movableNode?.scaleUp()
             movableNode?.position = location!
         }
-        
+
         if movableNode == player {
             playerSpeed = 0
         }
+
+        movableNode?.scaleUp()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -81,7 +79,6 @@ class FourthPageScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        movableNode?.stopGlow()
         movableNode?.scaleDown()
         movableNode = player
         arrowField.updateArrowGrid()

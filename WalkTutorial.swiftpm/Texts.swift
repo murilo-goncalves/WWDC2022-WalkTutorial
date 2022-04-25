@@ -14,7 +14,7 @@ struct Texts {
     
     static let third = "Wow 😍! That's already looking neat! Of course the attractive is only one of the infinite types of fields. Let's meet some other types that will help us improve our robot's movement. Another very simple field is the repulsive one:"
     
-    static let fourth = "With those two fields we met, it's already possible to make something very interesting: combine both to make our pink and blue friend follow an attractive goal while also avoiding repulsive obstacles!"
+    static let fourth = "With those two fields we just met, it's already possible to make something very interesting: combine both to make our pink and blue friend follow an attractive goal while also avoiding a repulsive obstacle!"
     
     static let fifth = "Now, we will take a look at the attractive Hyperbolic Spiral Field. It may sound intimidating, but it’s really friendly! Being a spiral, we can choose between"
     

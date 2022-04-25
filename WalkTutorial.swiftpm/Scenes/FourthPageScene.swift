@@ -31,7 +31,7 @@ class FourthPageScene: SKScene {
         addChild(arrowField)
         
         player.position = CGPoint(x: frame.maxX, y: frame.maxY)
-        obstacleField.position = CGPoint(x: 100, y: 100)
+        obstacleField.position = CGPoint(x: 100, y: 80)
         movableNode = player
         arrowField.addChild(player)
         

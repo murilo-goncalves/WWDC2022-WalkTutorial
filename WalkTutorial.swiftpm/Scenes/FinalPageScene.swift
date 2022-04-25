@@ -25,7 +25,7 @@ class FinalPageScene: SKScene {
         setFieldFrameConstraints(node: goalField)
         setFieldFrameConstraints(node: player)
         
-        goalField.position = CGPoint(x: -200, y: -10)
+        goalField.position = CGPoint(x: -200, y: 50)
         goalField.physicsBody = SKPhysicsBody(circleOfRadius: goalField.size.width / 2)
         goalField.physicsBody?.usesPreciseCollisionDetection = true
         goalField.physicsBody?.mass = 1
@@ -34,7 +34,7 @@ class FinalPageScene: SKScene {
         
         addChild(arrowField)
         
-        player.position = frame.origin
+        player.position = CGPoint(x: 100, y: 0)
         player.physicsBody = SKPhysicsBody(texture: player.texture!, size: player.size)
         player.physicsBody?.usesPreciseCollisionDetection = true
         player.physicsBody?.mass = 100
@@ -53,9 +53,9 @@ class FinalPageScene: SKScene {
         player.zRotation = angle + CGFloat.pi / 2
         
         if (goalField.position.x <= frame.minX + goalField.size.width && goalField.getFieldType() == .MOVE_TO_GOAL_LEFT) {
-            goalField.position = CGPoint(x: -200, y: -10)
+            goalField.position = CGPoint(x: -200, y: 50)
         } else if (goalField.position.x >= frame.maxX - goalField.size.width && goalField.getFieldType() == .MOVE_TO_GOAL_RIGHT) {
-            goalField.position = CGPoint(x: 200, y: 10)
+            goalField.position = CGPoint(x: 200, y: 50)
         }
         
         arrowField.updateArrowGrid()
